@@ -27,6 +27,11 @@
 							<view class="select-con_item_top_data_item_title">总抽卡数</view>
 						</view>
 						
+						<view class="select-con_item_top_data_item" style="margin-left: 60rpx;">
+							<view class="select-con_item_top_data_item_num">{{limit_list.count || 0}}</view>
+							<view class="select-con_item_top_data_item_title">平均出金</view>
+						</view>
+						
 					</view>
 				</view>
 				<view class="select-con_item_item">
@@ -49,6 +54,10 @@
 							<view class="select-con_item_top_data_item_title">总抽卡数</view>
 						</view>
 						
+						<view class="select-con_item_top_data_item" style="margin-left: 60rpx;">
+							<view class="select-con_item_top_data_item_num">{{weapon_list.count || 0}}</view>
+							<view class="select-con_item_top_data_item_title">平均出金</view>
+						</view>
 					</view>
 				</view>
 				<view class="select-con_item_item">
@@ -71,6 +80,10 @@
 							<view class="select-con_item_top_data_item_title">总抽卡数</view>
 						</view>
 						
+						<view class="select-con_item_top_data_item" style="margin-left: 60rpx;">
+							<view class="select-con_item_top_data_item_num">{{permanent_list.count|| 0}}</view>
+							<view class="select-con_item_top_data_item_title">平均出金</view>
+						</view>
 					</view>
 				</view>
 				<view class="select-con_item_item">
@@ -137,11 +150,15 @@
 				
 				let _this = this
 				
-				let _url = this.$data.webstaticUrl.substr(this.$data.webstaticUrl.indexOf('?') + 1)
+				// let _url = this.$data.webstaticUrl.substr(this.$data.webstaticUrl.indexOf('?') + 1)
 				
-				_url = _url.replace('#/log', '')
+				let _url = this.$data.webstaticUrl.replace('&gacha_type=200&page=1&end_id=0', '')
 				
-				let url = mihoyo_url + mihoyo_api_info + '?' + _url + '&gacha_type=200&page=1&size=20&end_id='
+				// _url = _url.replace('#/log', '')
+				
+				let url = _url + '&gacha_type=200&page=1&size=20&end_id='
+				
+				console.log(_url)
 				
 				if (eid) {
 					url = url + eid
@@ -165,7 +182,7 @@
 					} else {
 						this.$data.permanent_list_info = this.$data.permanent_list_info.reverse()
 						this.$data.permanent_list = this.filterRankType5(this.$data.permanent_list_info)
-						this.getLimitListInfo(mihoyo_url + mihoyo_api_info + '?' + _url, false)
+						this.getLimitListInfo(_url, false)
 					}
 					
 					console.log('常驻池：',res)
@@ -241,6 +258,8 @@
 			  }
 			
 			  _data.num = list.length - _idx
+			  
+			  _data.count = (list.length / _data.list.length).toFixed(2)
 			
 			  return _data
 			}
@@ -250,7 +269,6 @@
 
 <style lang="less">
 	.content {
-		// width: 70%;
 		display: flex;
 		align-items: center;
 		flex-direction: column;
@@ -266,7 +284,6 @@
 				justify-content: space-between;
 				align-items: center;
 				margin-top: 28rpx;
-				// height: 60rpx;
 				width: 100%;
 				border: 1rpx solid #FFFFFF;
 				border-radius: 40rpx;
@@ -306,6 +323,7 @@
 				box-shadow: 0px 3px 20rpx 0px rgba(216, 216, 217, 0.3);
 				border-radius: 20rpx;
 				padding: 20rpx;
+				box-sizing: border-box;
 				
 				.select-con_item_top {
 					.select-con_item_title {
@@ -342,6 +360,7 @@
 				}
 			
 				.select-con_item_item {
+					margin-top: 20rpx;
 					display: flex;
 					flex-wrap: wrap;
 					font-size: 30rpx;
