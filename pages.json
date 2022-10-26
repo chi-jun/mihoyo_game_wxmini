@@ -6,7 +6,16 @@
 				"navigationBarTitleText": "查询记录"
 			}
 		}
-	],
+	    ,{
+            "path" : "pages/historyDrawCard/historyDrawCard",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "查看历史记录",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
